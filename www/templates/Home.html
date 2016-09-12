@@ -1,24 +1,26 @@
-<ion-view view-title="Home">
-    <ion-content>
+<ion-view title="Home" id="page5">
+    <ion-content padding="true" class="has-header">
+      <div class="list">
 
+                  <label class="item item-input item-floating-label">
+                      <span class="input-label">Message</span>
+                      <input type="text" ng-model="newMessageText" placeholder="Messages">
+                  </label>
+                  <button class="button button-block button-calm ink" ng-click="addMessage(newMessageText)" type="button">
+                      Submit
+                  </button>
+{{newMessageText}}
+
+            </div>
+            <ul class="list-group">
+     <li class="list-group-item animated fadeIn" ng-repeat='message in messages'>
+      <div class="input-group">
+     <input type="text" ng-model="message.text" class="form-control" ng-change="messages.$save(message)"  placeholder="message">
+     <span class="input-group-btn">
+       <button class="btn btn-danger" ng-click="messages.$remove(message)" type="button">Delete !</button>
+     </span>
+</div>
+     </li>
+   </ul>
     </ion-content>
-    <ion-tabs class="tabs-icon-top tabs-color-active-positive">
-
-  <!-- Dashboard Tab -->
-  <ion-tab title="Status" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/tab/dash">
-    <ion-nav-view name="tab-dash"></ion-nav-view>
-  </ion-tab>
-
-  <!-- Chats Tab -->
-  <ion-tab title="Chats" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/tab/chats">
-    <ion-nav-view name="tab-chats"></ion-nav-view>
-  </ion-tab>
-
-  <!-- Account Tab -->
-  <ion-tab title="Account" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/tab/account">
-    <ion-nav-view name="tab-account"></ion-nav-view>
-  </ion-tab>
-
-
-</ion-tabs>
 </ion-view>

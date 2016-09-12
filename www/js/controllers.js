@@ -1,209 +1,61 @@
-/* global angular, document, window */
-angular.module('starter.controllers', [])
+angular.module('app.controllers', ["firebase"])
 
-.controller('AppCtrl', function($scope, $ionicModal, $ionicPopover, $timeout,  $location) {
-    // Form data for the login modal
-    $scope.loginData = {};
+.controller('homeCtrl', ['$scope', '$stateParams', '$firebaseArray', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams, $firebaseArray) {
+  var firebase = new Firebase("https://test-82d9b.firebaseio.com/data");
+    // create a synchronized array
+    //$scope.messages = $firebaseArray(ref);
+    // add new items to the array
+    // the message is automatically added to our Firebase database!
+    $scope.addMessage = function(message) {
+      // console.error(message);
+      // $scope.messages.$add({
+      //   messages: message,
+      // });
+      var storageRef = firebase.storage().ref();
 
-    var navIcons = document.getElementsByClassName('ion-navicon');
-    for (var i = 0; i < navIcons.length; i++) {
-        navIcons[i].addEventListener('click', function() {
-            this.classList.toggle('active');
-        });
-    }
+    // Create a reference to 'mountains.jpg'
+    var mountainsRef = storageRef.child('daenerys.jpg');
 
+    // Create a reference to 'images/mountains.jpg'
+    var mountainImagesRef = storageRef.child('images/daenerys.jpg');
 
-
-    // .fromTemplate() method
-    var template =  '<ion-popover-view>' +
-                    '   <ion-header-bar>' +
-                    '       <h1 class="title">My Popover Title</h1>' +
-                    '   </ion-header-bar>' +
-                    '   <ion-content class="padding">' +
-                    '       My Popover Contents' +
-                    '   </ion-content>' +
-                    '</ion-popover-view>';
-
-    $scope.popover = $ionicPopover.fromTemplate(template, {
-        scope: $scope
-    });
-    $scope.closePopover = function() {
-        $scope.popover.hide();
+    // While the file names are the same, the references point to different files
+    mountainsRef.name === mountainImagesRef.name            // true
+    mountainsRef.fullPath === mountainImagesRef.fullPath    // false
     };
-    //Cleanup the popover when we're done with it!
-    $scope.$on('$destroy', function() {
-        $scope.popover.remove();
-    });
-})
+}])
 
-.controller('InkCtrl', function($scope, $stateParams, ionicMaterialInk) {
-    ionicMaterialInk.displayEffect();
-})
+.controller('newMenuCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
 
-.controller('ComponentsCtrl', function($scope, $stateParams,  ionicMaterialInk) {
-    ionicMaterialInk.displayEffect();
 
-    // Toggle Code Wrapper
-    var code = document.getElementsByClassName('code-wrapper');
-    for (var i = 0; i < code.length; i++) {
-        code[i].addEventListener('click', function() {
-            this.classList.toggle('active');
-        });
-    }
-})
-.controller('HomeCtrl', function($scope, $stateParams,  ionicMaterialInk) {
-  ionicMaterialInk.displayEffect();
-})
+}])
 
-.controller('ListsCtrl', function($scope, $stateParams,  ionicMaterialMotion) {
+.controller('randomCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
 
-    var reset = function() {
-        var inClass = document.querySelectorAll('.in');
-        for (var i = 0; i < inClass.length; i++) {
-            inClass[i].classList.remove('in');
-            inClass[i].removeAttribute('style');
-        }
-        var done = document.querySelectorAll('.done');
-        for (var j = 0; j < done.length; j++) {
-            done[j].classList.remove('done');
-            done[j].removeAttribute('style');
-        }
-        var ionList = document.getElementsByTagName('ion-list');
-        for (var k = 0; k < ionList.length; k++) {
-            var toRemove = ionList[k].className;
-            if (/animate-/.test(toRemove)) {
-                ionList[k].className = ionList[k].className.replace(/(?:^|\s)animate-\S*(?:$|\s)/, '');
-            }
-        }
-    };
 
-    $scope.ripple = function() {
-        reset();
-        document.getElementsByTagName('ion-list')[0].className += ' animate-ripple';
-        setTimeout(function() {
-            ionicMaterialMotion.ripple();
-        }, 500);
-    };
+}])
 
-    $scope.fadeSlideInRight = function() {
-        reset();
-        document.getElementsByTagName('ion-list')[0].className += ' animate-fade-slide-in-right';
-        setTimeout(function() {
-            ionicMaterialMotion.fadeSlideInRight();
-        }, 500);
-    };
+.controller('favoriteCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
 
-    $scope.fadeSlideIn = function() {
-        reset();
-        document.getElementsByTagName('ion-list')[0].className += ' animate-fade-slide-in';
-        setTimeout(function() {
-            ionicMaterialMotion.fadeSlideIn();
-        }, 500);
-    };
 
-    $scope.blinds = function() {
-        reset();
-        document.getElementsByTagName('ion-list')[0].className += ' animate-blinds';
-        setTimeout(function() {
-            ionicMaterialMotion.blinds();
-        }, 500);
-    };
+}])
 
-    $scope.blinds();
+.controller('bookmarkCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
 
-})
 
-.controller('SetupCtrl', function($scope, $stateParams) {
-    /* ionicMaterialMotion.pushDown({
-        selector: '.push-down'
-    });
-    */
-})
-
-.controller('ExtensionsCtrl', function($scope, $stateParams, $ionicActionSheet, $timeout, $ionicLoading, $ionicModal, $ionicPopup,  ionicMaterialInk) {
-
-    // Triggered on a button click, or some other target
-    $scope.actionSheet = function() {
-
-        // Show the action sheet
-        var hideSheet = $ionicActionSheet.show({
-            buttons: [{
-                text: '<b>Share</b> This'
-            }, {
-                text: 'Move'
-            }],
-            destructiveText: 'Delete',
-            titleText: 'Modify your album',
-            cancelText: 'Cancel',
-            cancel: function() {
-                // add cancel code..
-            },
-            buttonClicked: function(index) {
-                return true;
-            }
-        });
-
-        // For example's sake, hide the sheet after two seconds
-        $timeout(function() {
-            hideSheet();
-        }, 2000);
-
-    };
-
-    $scope.loading = function() {
-        $ionicLoading.show({
-            template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
-        });
-
-        // For example's sake, hide the sheet after two seconds
-        $timeout(function() {
-            $ionicLoading.hide();
-        }, 2000);
-    };
-
-    $ionicModal.fromTemplateUrl('my-modal.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-    }).then(function(modal) {
-        $scope.modal = modal;
-    });
-
-    $scope.openModal = function() {
-        $scope.modal.show();
-        $timeout(function () {
-            $scope.modal.hide();
-        }, 2000);
-    };
-    // Cleanup the modal when we're done with it
-    $scope.$on('$destroy', function() {
-        $scope.modal.remove();
-    });
-
-    // Popover
-    $scope.popover = function() {
-        $scope.$parent.popover.show();
-        $timeout(function () {
-            $scope.$parent.popover.hide();
-        }, 2000);
-    };
-
-    // Confirm
-    $scope.showPopup = function() {
-        var alertPopup = $ionicPopup.alert({
-            title: 'You are now my subscribed to Cat Facts',
-            template: 'You will meow receive fun daily facts about CATS!'
-        });
-
-        $timeout(function() {
-            ionicMaterialInk.displayEffect();
-        }, 0);
-    };
-
-    // Toggle Code Wrapper
-    var code = document.getElementsByClassName('code-wrapper');
-    for (var i = 0; i < code.length; i++) {
-        code[i].addEventListener('click', function() {
-            this.classList.toggle('active');
-        });
-    }
-})
+}])
